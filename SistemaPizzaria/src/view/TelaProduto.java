@@ -31,6 +31,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	public void handle(ActionEvent event) {
 		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
 		if (event.getTarget() == btnSair) {
+			  
 			sair(janela);
 		}
 		else if (event.getTarget() == btnGravar) {
