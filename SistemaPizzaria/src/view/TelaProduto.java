@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 
 import controller.ProdutoController;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -13,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Produto;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent> {
@@ -49,7 +47,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		adicionarComponentes(pane);
 		adicionarObservadores();
 		stage.setScene(scene);
-		stage.initStyle(StageStyle.UNDECORATED);
+		//stage.initStyle(StageStyle.UNDECORATED);
+		stage.setTitle("Cadastro de produtos");
 		stage.show();
 	}
 	
@@ -89,14 +88,15 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	
 	private void sair() {
 		try {
-			Platform.exit();
-			System.exit(0);
+			Stage s = (Stage)btnSair.getScene().getWindow();
+			s.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
 	private void adicionarProduto() {
+		txtValor.setText(formataValor(txtValor.getText()));
 		if(!validarCampos()) {
 			JOptionPane.showMessageDialog(null, "Dados inválidos!");
 			return;
@@ -135,5 +135,10 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			}
 		}
 		return valido;
+	}
+	
+	private String formataValor(String valor) {
+		valor = valor.replace(",", ".");
+		return valor;
 	}
 }

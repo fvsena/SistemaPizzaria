@@ -6,13 +6,13 @@ import java.util.List;
 import model.Produto;
 
 public class ProdutoDAO {
-	private List<Produto> listaProdutos = new ArrayList<Produto>();
+	private static List<Produto> listaProdutos = new ArrayList<Produto>();
 	
 	public void adicionarProduto(Produto p) {
-		this.listaProdutos.add(p);
+		listaProdutos.add(p);
 	}
 	
 	public List<Produto> obterProdutos(){
-		return this.listaProdutos;
+		return listaProdutos;
 	}
 }
