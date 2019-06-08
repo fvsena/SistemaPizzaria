@@ -6,6 +6,7 @@ import controller.ProdutoController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,8 +29,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	
 	@Override
 	public void handle(ActionEvent event) {
+		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
 		if (event.getTarget() == btnSair) {
-			sair();
+			sair(janela);
 		}
 		else if (event.getTarget() == btnGravar) {
 			adicionarProduto();
@@ -86,9 +88,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		btnExibirProdutos.addEventFilter(ActionEvent.ACTION, this);
 	}
 	
-	private void sair() {
+	private void sair(Stage s) {
 		try {
-			Stage s = (Stage)btnSair.getScene().getWindow();
 			s.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
