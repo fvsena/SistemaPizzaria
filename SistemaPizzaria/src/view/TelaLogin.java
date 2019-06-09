@@ -1,5 +1,8 @@
 package view;
 
+import javax.swing.JOptionPane;
+
+import controller.LoginController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,11 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class TelaLogin extends Application implements  EventHandler<ActionEvent>{
 
+	LoginController controller = new LoginController();
 	Label titulo = new Label("Odin - Sistema de Pizzaria");
 	Label usuario = new Label("USUARIO");
 	Label senha = new Label("SENHA");
@@ -27,10 +32,15 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 
 
 	public void handle(ActionEvent event) {
-		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
-		TelaPrincipal p = new TelaPrincipal();
+		Stage janelaLogin = (Stage)((Node) event.getSource()).getScene().getWindow();
 		if (event.getTarget() == btnSair) {
-			p.sair(janela);
+			sair(janelaLogin);
+			
+		}
+		else if(event.getTarget() == btnLogin){
+			
+			 verificarLogin(janelaLogin);
+			 
 		}
 	}
 
@@ -60,6 +70,7 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 
 	private void observadores() {
 		btnSair.addEventFilter(ActionEvent.ACTION, this);
+		btnLogin.addEventFilter(ActionEvent.ACTION, this);
 	}
 
 	private void posicionamento() {
@@ -70,6 +81,41 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 		txtSenha.relocate(190,160);
 		btnLogin.relocate(285, 200);
 		btnSair.relocate(190, 200);
+	}
+	
+	private void verificarLogin(Stage janelaLogin) {
+		String usuario = txtUsuario.getText();
+		String senha = txtSenha.getText();
+		
+		if (controller.validarLogin(usuario, senha)) {
+			//Direciona pro menu
+			abrirMenuPrincipal();
+			sair(janelaLogin);
+		} else {
+			//Mensagem de usuário ou senha inválido
+		JOptionPane.showMessageDialog(null, "Login Invalido");
+		}
+	}
+	
+	private void abrirMenuPrincipal() {
+		TelaPrincipal telaPrincipal = new TelaPrincipal();
+		try {
+			Stage entrarMenu = new Stage();
+			entrarMenu.initModality(Modality.NONE);
+			
+			telaPrincipal.start(entrarMenu);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void sair(Stage janelaLogin) {
+		try {
+			janelaLogin.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }
 

@@ -27,7 +27,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	TextField txtNome = new  TextField ( );
 	TextField txtEndereco =  new TextField();
 	TextField txtProduto =  new  TextField();
-	ComboBox<Produto> cmbProduto = new ComboBox();
+	ComboBox<Produto> cmbProduto = new ComboBox<Produto>();
 	TextField txtQuantidade =  new  TextField();
 	TextField txtTaxaEntrega = new  TextField();
 	TextField txtTotal =  new TextField( );
