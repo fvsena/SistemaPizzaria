@@ -5,6 +5,16 @@ public class Produto {
 	public String ingredientes;
 	public double valor;
 	
+	public Produto(String nome, String ingredientes, double valor) {
+		this.nome = nome;
+		this.ingredientes = ingredientes;
+		this.valor = valor;
+	}
+	
+	public Produto() {
+		
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();

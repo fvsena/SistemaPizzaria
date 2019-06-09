@@ -108,8 +108,12 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		p.nome = txtNome.getText();
 		p.ingredientes = txtIngredientes.getText();
 		p.valor = Double.parseDouble(txtValor.getText());
-		controller.adicionarProduto(p);
-		JOptionPane.showMessageDialog(null, String.format("Produto adicionado com suceso! \n %s",p.toString()));
+		
+		if (controller.adicionarProduto(p) > 0) {
+			JOptionPane.showMessageDialog(null, String.format("Produto adicionado com suceso! \n %s",p.toString()));
+		} else {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o produto!");
+		}
 		limpaCampos();
 	}
 	

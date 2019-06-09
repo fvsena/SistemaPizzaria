@@ -5,8 +5,8 @@ import model.Produto;
 
 public class ProdutoController {
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
-	public void adicionarProduto(Produto p) {
-		produtoDAO.adicionarProduto(p);
+	public int adicionarProduto(Produto p) {
+		return produtoDAO.adicionarProduto(p);
 	}
 	
 	public void mostrarProdutos() {
