@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class TelaLogin extends Application implements  EventHandler<ActionEvent>{
 
@@ -49,7 +50,7 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 		observadores();
 		posicionamento();
 		titulo.setFont(Font.font("Arial", 32));
-		//stage.initStyle(StageStyle.UNDECORATED);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("LOGIN");
 		stage.show();
 	}
@@ -59,7 +60,6 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 	}
 
 	private void observadores() {
-
 		btnSair.addEventFilter(ActionEvent.ACTION, this);
 	}
 

@@ -26,12 +26,10 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			abrirProduto(janela);
 		} else if (event.getTarget() == btnFechar) {
 			sair(janela);
-		}
-
-		if (event.getTarget() == btnPedido) {
+		} else if (event.getTarget() == btnPedido) {
 			abrirPedido(janela);
-
-		}}
+		}
+	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
