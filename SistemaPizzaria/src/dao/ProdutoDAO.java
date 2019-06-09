@@ -3,6 +3,8 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Produto;
 
 public class ProdutoDAO {
@@ -15,4 +17,8 @@ public class ProdutoDAO {
 	public List<Produto> obterProdutos(){
 		return listaProdutos;
 	}
+	
+	public ObservableList<Produto> tipoProduto = FXCollections.observableArrayList(
+			obterProdutos()
+		);
 }

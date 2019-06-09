@@ -28,7 +28,6 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 
 	public void handle(ActionEvent event) {
 		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
-
 		TelaPrincipal p = new TelaPrincipal();
 		if (event.getTarget() == btnSair) {
 			p.sair(janela);
@@ -72,7 +71,6 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 		btnLogin.relocate(285, 200);
 		btnSair.relocate(190, 200);
 	}
-
 }
 
 
