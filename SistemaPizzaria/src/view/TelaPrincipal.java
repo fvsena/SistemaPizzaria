@@ -27,11 +27,11 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		} else if (event.getTarget() == btnFechar) {
 			sair(janela);
 		}
-		
+
 		if (event.getTarget() == btnPedido) {
 			abrirPedido(janela);
-		
-	}}
+
+		}}
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -81,22 +81,22 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void abrirPedido(Stage parent) {
 		TelaPedido tP = new TelaPedido();
 		try {
-		Stage novaTela = new Stage();
+			Stage novaTela = new Stage();
 
-		novaTela.initModality(Modality.WINDOW_MODAL);
-		novaTela.initOwner(parent);
-		tP.start(novaTela);
-	} catch (Exception e) {
-		e.printStackTrace();
+			novaTela.initModality(Modality.WINDOW_MODAL);
+			novaTela.initOwner(parent);
+			tP.start(novaTela);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	}
-	
-	
-	
+
+
+
 	public void sair(Stage s) {
 		try {
 			s.close();
