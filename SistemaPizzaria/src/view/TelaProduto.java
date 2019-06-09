@@ -40,6 +40,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		else if (event.getTarget() == btnExibirProdutos) {
 			exibirProdutos();
 		}
+		
 	}
 
 	@Override

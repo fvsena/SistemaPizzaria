@@ -35,8 +35,12 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 
 
 	public void handle(ActionEvent event) {
+		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
+		TelaPrincipal p = new TelaPrincipal();
+		 if (event.getTarget() == btnSair) {
+			p.sair(janela);
 		
-	}
+	}}
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -44,6 +48,8 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		Scene scn = new Scene(painel, 800, 500);
 		stage.setScene(scn);
 		posicao();
+		adicionarObservadores();
+
 			
 			painel.getChildren().add(telefone);
 			painel.getChildren().add(nome);
@@ -66,9 +72,16 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		painel.getChildren().add(txtTotal);
 			
 			
+		
+		
 			
 			stage.setTitle("PEDIDOS");
 			stage.show();	
+	}
+	
+	private void adicionarObservadores() {
+	
+		btnSair.addEventFilter(ActionEvent.ACTION, this);
 	}
 	
 	

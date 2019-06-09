@@ -24,8 +24,12 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 
 	
 	public void handle(ActionEvent event) {
-		
-		
+		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+		TelaPrincipal p = new TelaPrincipal();
+		if (event.getTarget() == btnSair) {
+			p.sair(janela);
+		}
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 		painel.getChildren().add(btnSair);
 		painel.getChildren().add(txtUsuario);
 		painel.getChildren().add(txtSenha);	
-		
+		 observadores();
 		posicionamento();
 		//stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("LOGIN");
@@ -48,6 +52,11 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 
 	public static void main(String[] args) {
 		Application.launch(args);
+	}
+	
+	private void observadores() {
+		
+		btnSair.addEventFilter(ActionEvent.ACTION, this);
 	}
 	
 	private void posicionamento() {
