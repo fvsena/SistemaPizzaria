@@ -34,6 +34,24 @@ public class ProdutoDAO {
 		return linhasAfetadas;
 	}
 	
+	public int excluirProduto(Produto p) {
+		int linhasAfetadas = 0;
+		try {
+			String sql = ""
+					+ "DELETE FROM Produto WHERE "
+					+ "Nome = ?";
+			Connection conn = ConnectionManager.getInstance().getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, p.nome);
+			linhasAfetadas = statement.executeUpdate();
+			return linhasAfetadas;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return linhasAfetadas;
+	}
+	
 	public List<Produto> obterProdutos(){
 		listaProdutos.clear();
 		try {
