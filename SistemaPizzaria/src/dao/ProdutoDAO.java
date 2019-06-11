@@ -12,8 +12,10 @@ import javafx.collections.ObservableList;
 import model.Produto;
 
 public class ProdutoDAO {
+	//Lista de Produtos
 	private static List<Produto> listaProdutos = new ArrayList<Produto>();
 	
+	//Insere um produto no banco de dados
 	public int adicionarProduto(Produto p) {
 		int linhasAfetadas = 0;
 		try {
@@ -34,6 +36,7 @@ public class ProdutoDAO {
 		return linhasAfetadas;
 	}
 	
+	//Exclui um produto no banco de dados
 	public int excluirProduto(Produto p) {
 		int linhasAfetadas = 0;
 		try {
@@ -52,6 +55,7 @@ public class ProdutoDAO {
 		return linhasAfetadas;
 	}
 	
+	//Retorna todos os produtos cadastrados no banco de dados
 	public List<Produto> obterProdutos(){
 		listaProdutos.clear();
 		try {
