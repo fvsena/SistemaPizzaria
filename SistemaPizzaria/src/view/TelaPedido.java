@@ -22,7 +22,7 @@ import model.Produto;
 public class TelaPedido extends Application implements EventHandler<ActionEvent> {
 
 	private PedidoController controller = new PedidoController();
-	
+
 	Label telefone = new  Label("TELEFONE");
 	Label nome = new  Label( "NOME");
 	Label endereco =  new  Label("ENDERECO");
@@ -44,73 +44,67 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	Button btnSair = new  Button("SAIR");
 
 	private TableView<Pedido> tbPedido = new TableView<Pedido>();
-		TelaPrincipal p = new TelaPrincipal();
+	TelaPrincipal p = new TelaPrincipal();
 
 
 	public void handle(ActionEvent event) {
 		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
-		
-		
 		if (event.getTarget() == btnSair) {
 			p.sair(janela);
 		}
-	if (event.getTarget() == btnGravar){
-		adicionarPedido();
-		
-	}}
-	
-	private void adicionarPedido() {
-	
-		Pedido pedido = new Pedido(null, 0, null, null, 0, 0, 0);
-		
-	
-	pedido.nomeP = txtNome.getText();
-	pedido.telefoneP = Integer.parseInt(txtTelefone.getText());
-	pedido.enderecoP = txtProduto.getText();
-	pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
-	pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
-	//pedido.totalP = Integer.parseInt(txtTotal.getText())
-	
-	if (validarCampos() == false ) {
-		JOptionPane.showMessageDialog(null, "Dados inválidos!");
-		
-	}
-	
-	if (controller.adicionarPedido(p) > 0) {
-		JOptionPane.showMessageDialog(null, String.format("Pedido adicionado com suceso! \n %s",p.toString()));
-	} else {
-		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o pedido!");
-	}
-	tbPedidos.setItems(controller.obterPedidos());
+		if (event.getTarget() == btnGravar){
+			adicionarPedido();
 
+		}}
+
+	private void adicionarPedido() {
+
+		if (validarCampos() == false ) {
+			JOptionPane.showMessageDialog(null, "Dados inválidos!");
+			return;
+		}
+		
+		Pedido pedido = new Pedido(null, null, null, null, 0, 0, 0);
+
+		pedido.nomeP = txtNome.getText();
+		pedido.telefoneP = txtTelefone.getText();
+		pedido.enderecoP = txtProduto.getText();
+		pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
+		pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
+		//pedido.totalP = Integer.parseInt(txtTotal.getText())
+
+		
+
+		if (controller.adicionarPedido(pedido) > 0) {
+			JOptionPane.showMessageDialog(null, String.format("Pedido adicionado com suceso! \n %s",p.toString()));
+		} else {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o pedido!");
+		}
+		tbPedido.setItems(controller.obterPedido());
 	}
-	
+
 	private boolean validarCampos() {
-		boolean valido =true;
+		boolean valido = true;
 		if (
 				txtNome.getText().equals("") || 
 				txtTelefone.getText().equals("") || 
-				txtProduto.getText().equals("") || 
+				cmbProduto.getValue().toString().equals("") || 
 				txtQuantidade.getText().equals("") || 
-				txtTaxaEntrega.getText().equals("") 
+				txtTaxaEntrega.getText().equals("")  ||
+				txtTelefone.getText().equals("")
 				){
+			valido = false;
+		}else {
+			try {
+				Integer.parseInt(txtQuantidade.getText());
+				Integer.parseInt(txtTaxaEntrega.getText());
+
+			} catch (Exception e) {
 				valido = false;
-				
-				}else {
-				try {
-					 Integer.parseInt(txtTelefone.getText());
-					 Integer.parseInt(txtQuantidade.getText());
-					Integer.parseInt(txtTaxaEntrega.getText());
-				
-				} catch (Exception e) {
-					valido = false;
-				}
+			}
 		}
-		
-		
-			return valido;}
-	
-	
+		return valido;
+	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -139,7 +133,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		painel.getChildren().add(txtQuantidade);
 		painel.getChildren().add(txtTaxaEntrega);
 		painel.getChildren().add(txtTotal);
-
+		carregaProduto();
 		stage.setTitle("PEDIDOS");
 		stage.show();	
 	}
@@ -147,7 +141,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	private void adicionarObservadores() {
 		btnSair.addEventFilter(ActionEvent.ACTION, this);
 		btnGravar.addEventFilter(ActionEvent.ACTION,this);
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -162,7 +156,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		quantidade.relocate(50,220);
 		taxaEntrega.relocate(50,250);
 		total.relocate(50,280);
-		
+
 		btnGravar.relocate(50,320);
 		btnSair.relocate(200,320);
 
@@ -175,6 +169,9 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		txtTaxaEntrega.relocate(200,250);
 		txtTotal.relocate(200,280);
 	}
-	
-	
+
+	private void carregaProduto() {
+		cmbProduto.getItems().addAll(controller.obterProdutos());
+	}
+
 }
