@@ -42,6 +42,7 @@ public class PedidoDao {
 		return linhasAfetadas;
 	}
 
+<<<<<<< HEAD
 	public List<Pedido> obterPedido(){
 
 		try {
@@ -94,5 +95,34 @@ public class PedidoDao {
 		return tipoProduto;
 	}
 
+=======
+public List<Pedido> obterPedido(){
+	
+	try {
+		String sql = ""
+				+ "SELECT telefone, nome, endereco, produto, quantidade, taxaEntrega, total "
+				+ "FROM Pedido";
+		Connection conn = ConnectionManager.getInstance().getConnection();
+		PreparedStatement statement = conn.prepareStatement(sql);
+		ResultSet rs = statement.executeQuery();
+		while(rs.next()) {
+			listaPedidos.add( new Pedido(
+					rs.getString("telefone"),
+					 rs.getString("nome"),
+					 rs.getString("endereco")
+					rs.getString("produto");
+					rs.getInt("quantidade");
+					rs.getInt("taxaEntrega");
+					rs.getInt("total")));
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	
+	return listaPedido;}
+	
+	
+	public ObservableList<Produto> tipoProduto = FXCollections.observableArrayLis obterPedido();
+	
+>>>>>>> 170293a9d1f4b16279f063a4dae726f01d1a56d9
 }
 
