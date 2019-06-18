@@ -34,4 +34,7 @@ CREATE TABLE Produto
 
 INSERT INTO Produto VALUES('Pizza de mussarela','Massa, molho, mussarela',25.9),('Pizza de calabresa','Massa, molho, calabresa, cebola',26.9),('Pizza de atum','Massa, molho, atum, cebola',32.9)
 
-SELECT * FROM Produto 
+SELECT * FROM Produto;
+
+
+

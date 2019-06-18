@@ -1,5 +1,9 @@
 package view;
 
+import javax.swing.JOptionPane;
+
+import controller.PedidoController;
+import controller.ProdutoController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,13 +12,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Pedido;
 import model.Produto;
 
 public class TelaPedido extends Application implements EventHandler<ActionEvent> {
 
+	private PedidoController controller = new PedidoController();
+	
 	Label telefone = new  Label("TELEFONE");
 	Label nome = new  Label( "NOME");
 	Label endereco =  new  Label("ENDERECO");
@@ -35,13 +43,74 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	Button btnGravar = new  Button("GRAVAR");
 	Button btnSair = new  Button("SAIR");
 
+	private TableView<Pedido> tbPedido = new TableView<Pedido>();
+		TelaPrincipal p = new TelaPrincipal();
+
 
 	public void handle(ActionEvent event) {
 		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
-		TelaPrincipal p = new TelaPrincipal();
+		
+		
 		if (event.getTarget() == btnSair) {
 			p.sair(janela);
-		}}
+		}
+	if (event.getTarget() == btnGravar){
+		adicionarPedido();
+		
+	}}
+	
+	private void adicionarPedido() {
+	
+		Pedido pedido = new Pedido(null, 0, null, null, 0, 0, 0);
+		
+	
+	pedido.nomeP = txtNome.getText();
+	pedido.telefoneP = Integer.parseInt(txtTelefone.getText());
+	pedido.enderecoP = txtProduto.getText();
+	pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
+	pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
+	//pedido.totalP = Integer.parseInt(txtTotal.getText())
+	
+	if (validarCampos() == false ) {
+		JOptionPane.showMessageDialog(null, "Dados inválidos!");
+		
+	}
+	
+	if (controller.adicionarPedido(p) > 0) {
+		JOptionPane.showMessageDialog(null, String.format("Pedido adicionado com suceso! \n %s",p.toString()));
+	} else {
+		JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o pedido!");
+	}
+	tbPedidos.setItems(controller.obterPedidos());
+
+	}
+	
+	private boolean validarCampos() {
+		boolean valido =true;
+		if (
+				txtNome.getText().equals("") || 
+				txtTelefone.getText().equals("") || 
+				txtProduto.getText().equals("") || 
+				txtQuantidade.getText().equals("") || 
+				txtTaxaEntrega.getText().equals("") 
+				){
+				valido = false;
+				
+				}else {
+				try {
+					 Integer.parseInt(txtTelefone.getText());
+					 Integer.parseInt(txtQuantidade.getText());
+					Integer.parseInt(txtTaxaEntrega.getText());
+				
+				} catch (Exception e) {
+					valido = false;
+				}
+		}
+		
+		
+			return valido;}
+	
+	
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -77,6 +146,8 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 
 	private void adicionarObservadores() {
 		btnSair.addEventFilter(ActionEvent.ACTION, this);
+		btnGravar.addEventFilter(ActionEvent.ACTION,this);
+		
 	}
 
 	public static void main(String[] args) {
@@ -104,4 +175,6 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		txtTaxaEntrega.relocate(200,250);
 		txtTotal.relocate(200,280);
 	}
+	
+	
 }

@@ -34,6 +34,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Button btnGravar = new Button("Gravar");
 	private Button btnSair = new Button("Sair");
 	private Button btnExcluir = new Button("Excluir");
+	
 	private TableView<Produto> tbProduto = new TableView<Produto>();
 	
 	//Método chamado quando houver uma interação na tela
