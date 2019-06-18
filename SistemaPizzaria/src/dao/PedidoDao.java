@@ -54,12 +54,12 @@ public List<Pedido> obterPedido(){
 		while(rs.next()) {
 			listaPedidos.add( new Pedido(
 					rs.getString("telefone"),
-					0, rs.getString("nome"),
-					null, rs.getInt("endereco"), 0, 0));
-					rs.getInt("produto");
+					 rs.getString("nome"),
+					 rs.getString("endereco")
+					rs.getString("produto");
 					rs.getInt("quantidade");
 					rs.getInt("taxaEntrega");
-					rs.getInt("total");
+					rs.getInt("total")));
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
