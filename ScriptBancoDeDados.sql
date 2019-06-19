@@ -36,5 +36,18 @@ INSERT INTO Produto VALUES('Pizza de mussarela','Massa, molho, mussarela',25.9),
 
 SELECT * FROM Produto;
 
+SELECT * FROM Pedido
 
+SELECT * FROM SYS.OBJECTS WITH (NOLOCK) WHERE TYPE_DESC = 'USER_TABLE'
 
+CREATE TABLE Pedido
+	(
+		IdPedido INT IDENTITY NOT NULL PRIMARY KEY,
+		Telefone VARCHAR(11),
+		Nome VARCHAR(100),
+		Endereco VARCHAR(255),
+		Produto VARCHAR(100),
+		Quantidade INT,
+		TaxaEntrega NUMERIC(5,2),
+		Total NUMERIC(5,2)
+	)

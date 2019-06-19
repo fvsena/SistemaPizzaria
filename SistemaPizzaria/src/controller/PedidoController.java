@@ -35,6 +35,8 @@ public class PedidoController {
 		public List<Produto> obterProdutos(){
 			return pedidoDAO.obterProdutos();
 		}
+		
+		
 
 }
 

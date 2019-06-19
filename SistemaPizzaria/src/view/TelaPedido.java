@@ -5,6 +5,9 @@ import javax.swing.JOptionPane;
 import controller.PedidoController;
 import controller.ProdutoController;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -12,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -71,7 +75,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		pedido.enderecoP = txtProduto.getText();
 		pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
 		pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
-		//pedido.totalP = Integer.parseInt(txtTotal.getText())
+		pedido.totalP = Integer.parseInt(txtTotal.getText());
 
 		
 
@@ -173,5 +177,38 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	private void carregaProduto() {
 		cmbProduto.getItems().addAll(controller.obterProdutos());
 	}
+	
+	private void popularPedido(Pedido p) {
+		txtNome.setText(p.nomeP);
+		txtTelefone.setText(p.telefoneP);
+		txtQuantidade.setText(""+p.quantidadeP);
+	}
+	
+	private void popularTabelaPizza() {
+		//Define o conteudo da tabela como o resultado da consulta do banco de dados
+		tbPedido.setItems(controller.obterPedido());
+		
+		//Quando um valor da tabela for selecionado, o método popularProduto é acionado e atualiza o conteudo dos textboxs
+		tbPedido.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Pedido>() {
+					public void changed(ObservableValue<? extends Pedido> p, Pedido p1, Pedido p2) {
+						popularPedido(p2);
+					}
+				});
+	TableColumn<Pedido, String> colunaNome = new TableColumn<>();
+	colunaNome.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().nomeP));
+	
 
-}
+	TableColumn<Pedido, String> colunaTelefone = new TableColumn<>();
+	colunaTelefone.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().telefoneP));
+	
+	TableColumn<Pedido, Integer> colunaQuantidade = new TableColumn<>();
+	colunaQuantidade.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().quantidadeP));
+	
+	colunaNome.setText("Nome");
+	colunaTelefone.setText("Telefone");
+	colunaQuantidade.setText("Quantidade");
+	
+	tbPedido.getColumns().addAll(colunaNome, colunaTelefone, colunaQuantidade);
+
+}}

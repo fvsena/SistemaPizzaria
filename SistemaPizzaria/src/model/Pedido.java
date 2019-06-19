@@ -22,5 +22,6 @@ public class Pedido {
 		this.totalP = totalP;
 	}
 	
+	public Pedido() {};
 	
 }
