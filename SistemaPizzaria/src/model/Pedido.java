@@ -7,7 +7,7 @@ public class Pedido {
 	public String nomeP;
 	public String telefoneP;
 	public String enderecoP;
-	public  Produto produtoP;
+	public  String produtoP;
 	public int quantidadeP;
 	public int taxaEntregaP;
 	public int totalP;

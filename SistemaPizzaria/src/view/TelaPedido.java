@@ -72,7 +72,8 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 
 		pedido.nomeP = txtNome.getText();
 		pedido.telefoneP = txtTelefone.getText();
-		pedido.enderecoP = txtProduto.getText();
+		pedido.enderecoP = txtEndereco.getText();
+		pedido.produtoP = cmbProduto.getValue().toString();
 		pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
 		pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
 		pedido.totalP = Integer.parseInt(txtTotal.getText());
@@ -202,7 +203,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	TableColumn<Pedido, String> colunaTelefone = new TableColumn<>();
 	colunaTelefone.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().telefoneP));
 	
-	TableColumn<Pedido, Integer> colunaQuantidade = new TableColumn<>();
+	TableColumn<Pedido, String> colunaQuantidade = new TableColumn<>();
 	colunaQuantidade.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().quantidadeP));
 	
 	colunaNome.setText("Nome");

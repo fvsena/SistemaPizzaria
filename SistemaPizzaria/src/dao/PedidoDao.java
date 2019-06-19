@@ -27,7 +27,7 @@ public class PedidoDao {
 			statement.setString(1, pedido.telefoneP);
 			statement.setString(2, pedido.nomeP);
 			statement.setString(3, pedido.enderecoP);
-			statement.setString(4, pedido.produtoP.nome);
+			statement.setString(4, pedido.produtoP);
 			statement.setDouble(5, pedido.quantidadeP);
 			statement.setDouble(6, pedido.taxaEntregaP);
 			statement.setDouble(7, pedido.totalP);

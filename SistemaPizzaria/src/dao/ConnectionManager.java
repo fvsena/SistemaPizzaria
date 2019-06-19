@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConnectionManager {
 	private static ConnectionManager instance;
 	private Connection conn;
-	private String connUrl = "jdbc:sqlserver://LAPTOP-AQ8F7GK1\\SQLEXPRESS:1433;databaseName=OdinPizzaria;integratedSecurity=true";
-	//private String connUrl = "jdbc:sqlserver://SENA-LAPTOP\\SQLEXPRESS:1433;databaseName=OdinPizzaria;integratedSecurity=true";
+	//private String connUrl = "jdbc:sqlserver://LAPTOP-AQ8F7GK1\\SQLEXPRESS:1433;databaseName=OdinPizzaria;integratedSecurity=true";
+	private String connUrl = "jdbc:sqlserver://SENA-LAPTOP\\SQLEXPRESS:1433;databaseName=OdinPizzaria;integratedSecurity=true";
 
 	private ConnectionManager() {
 		try {
