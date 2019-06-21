@@ -43,7 +43,7 @@ public class PedidoDao {
 
 
 	public List<Pedido> obterPedido(){
-
+		listaPedidos.clear();
 		try {
 			String sql = ""
 					+ "SELECT telefone, nome, endereco, produto, quantidade, taxaEntrega, total "
@@ -56,15 +56,11 @@ public class PedidoDao {
 						rs.getString("nome"),
 						rs.getString("telefone"),
 						rs.getString("endereco"),
-						null,
+						rs.getString("produto"),
 						rs.getInt("quantidade"),
-						rs.getInt("taxa"),
-						rs.getInt("total")));
-				rs.getInt("produto");
-				rs.getInt("quantidade");
-				rs.getInt("taxaEntrega");
-				rs.getInt("total");
-
+						rs.getDouble("taxaEntrega"),
+						rs.getDouble("total")));
+				
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -87,6 +83,7 @@ public class PedidoDao {
 						rs.getString("Nome"),
 						rs.getString("Ingredientes"),
 						rs.getDouble("Valor")));
+			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

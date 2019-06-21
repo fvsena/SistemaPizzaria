@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -67,24 +68,24 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 			JOptionPane.showMessageDialog(null, "Dados inválidos!");
 			return;
 		}
-		
-		Pedido pedido = new Pedido(null, null, null, null, 0, 0, 0);
+
+		Pedido pedido = new Pedido();
 
 		pedido.nomeP = txtNome.getText();
 		pedido.telefoneP = txtTelefone.getText();
 		pedido.enderecoP = txtEndereco.getText();
-		pedido.produtoP = cmbProduto.getValue().toString();
+		pedido.produtoP = cmbProduto.getValue().nome;
 		pedido.quantidadeP = Integer.parseInt(txtQuantidade.getText());
-		pedido.taxaEntregaP = Integer.parseInt(txtTaxaEntrega.getText());
-		pedido.totalP = Integer.parseInt(txtTotal.getText());
-
-		
+		pedido.taxaEntregaP = Double.parseDouble(txtTaxaEntrega.getText());
+		pedido.totalP = cmbProduto.getSelectionModel().getSelectedItem().valor * Double.parseDouble(""+pedido.quantidadeP) + pedido.taxaEntregaP; 
 
 		if (controller.adicionarPedido(pedido) > 0) {
-			JOptionPane.showMessageDialog(null, String.format("Pedido adicionado com suceso! \n %s",p.toString()));
+			JOptionPane.showMessageDialog(null, String.format("Pedido adicionado com suceso! \n %s",pedido.toString()));
 		} else {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o pedido!");
 		}
+		limpaCampos();
+		tbPedido.getItems().clear();
 		tbPedido.setItems(controller.obterPedido());
 	}
 
@@ -102,7 +103,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		}else {
 			try {
 				Integer.parseInt(txtQuantidade.getText());
-				Integer.parseInt(txtTaxaEntrega.getText());
+				Double.parseDouble(txtTaxaEntrega.getText());
 
 			} catch (Exception e) {
 				valido = false;
@@ -114,7 +115,7 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 	@Override
 	public void start(Stage stage) throws Exception {
 		Pane painel = new Pane();
-		Scene scn = new Scene(painel, 400, 380);
+		Scene scn = new Scene(painel, 400, 600);
 		stage.setScene(scn);
 		posicao();
 		adicionarObservadores();
@@ -138,7 +139,10 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		painel.getChildren().add(txtQuantidade);
 		painel.getChildren().add(txtTaxaEntrega);
 		painel.getChildren().add(txtTotal);
+		painel.getChildren().add(tbPedido);
 		carregaProduto();
+		tbPedido.prefWidthProperty().bind(stage.widthProperty());
+		popularTabelaPizza();
 		stage.setTitle("PEDIDOS");
 		stage.show();	
 	}
@@ -173,43 +177,80 @@ public class TelaPedido extends Application implements EventHandler<ActionEvent>
 		txtQuantidade.relocate(200,220);
 		txtTaxaEntrega.relocate(200,250);
 		txtTotal.relocate(200,280);
+		tbPedido.relocate(0, 350);
+		
+		txtTotal.setDisable(true);
+		
 	}
 
 	private void carregaProduto() {
 		cmbProduto.getItems().addAll(controller.obterProdutos());
 	}
-	
+
 	private void popularPedido(Pedido p) {
 		txtNome.setText(p.nomeP);
 		txtTelefone.setText(p.telefoneP);
+		txtEndereco.setText(p.enderecoP);
+		for (Produto prod : cmbProduto.getItems()) {
+			if (prod.nome.equals(p.produtoP)) {
+				cmbProduto.setValue(prod);
+				break;
+			}
+		}
 		txtQuantidade.setText(""+p.quantidadeP);
+		txtTaxaEntrega.setText(""+p.taxaEntregaP);
+		txtTotal.setText(""+p.totalP);
 	}
-	
+
 	private void popularTabelaPizza() {
-		//Define o conteudo da tabela como o resultado da consulta do banco de dados
 		tbPedido.setItems(controller.obterPedido());
-		
-		//Quando um valor da tabela for selecionado, o método popularProduto é acionado e atualiza o conteudo dos textboxs
+
 		tbPedido.getSelectionModel().selectedItemProperty().addListener(
 				new ChangeListener<Pedido>() {
 					public void changed(ObservableValue<? extends Pedido> p, Pedido p1, Pedido p2) {
 						popularPedido(p2);
 					}
 				});
-	TableColumn<Pedido, String> colunaNome = new TableColumn<>();
-	colunaNome.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().nomeP));
-	
 
-	TableColumn<Pedido, String> colunaTelefone = new TableColumn<>();
-	colunaTelefone.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().telefoneP));
-	
-	TableColumn<Pedido, String> colunaQuantidade = new TableColumn<>();
-	colunaQuantidade.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().quantidadeP));
-	
-	colunaNome.setText("Nome");
-	colunaTelefone.setText("Telefone");
-	colunaQuantidade.setText("Quantidade");
-	
-	tbPedido.getColumns().addAll(colunaNome, colunaTelefone, colunaQuantidade);
+		TableColumn<Pedido, String> colunaTelefone = new TableColumn<>();
+		colunaTelefone.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().telefoneP));
 
-}}
+		TableColumn<Pedido, String> colunaNome = new TableColumn<>();
+		colunaNome.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().nomeP));
+		
+		TableColumn<Pedido, String> colunaEndereco = new TableColumn<>();
+		colunaEndereco.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().enderecoP));
+		
+		TableColumn<Pedido, String> colunaProduto = new TableColumn<>();
+		colunaProduto.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().produtoP));
+
+		TableColumn<Pedido, String> colunaQuantidade = new TableColumn<>();
+		colunaQuantidade.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().quantidadeP));
+		
+		TableColumn<Pedido, String> colunaTaxa = new TableColumn<>();
+		colunaTaxa.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().taxaEntregaP));
+		
+		TableColumn<Pedido, String> colunaTotal = new TableColumn<>();
+		colunaTotal.setCellValueFactory(item -> new ReadOnlyStringWrapper(""+item.getValue().totalP));
+
+		colunaNome.setText("Nome");
+		colunaTelefone.setText("Telefone");
+		colunaEndereco.setText("ENDEREÇO");
+		colunaProduto.setText("PRODUTO");
+		colunaQuantidade.setText("Quantidade");
+		colunaTaxa.setText("TAXA");
+		colunaTotal.setText("TOTAL");
+
+		tbPedido.getColumns().addAll(colunaTelefone, colunaNome, colunaEndereco, colunaProduto, colunaQuantidade, colunaTaxa, colunaTotal);
+	}
+	
+	private void limpaCampos() {
+		txtNome.setText("");
+		txtTelefone.setText("");
+		txtEndereco.setText("");
+		cmbProduto.getSelectionModel().clearSelection();
+		txtQuantidade.setText("");
+		txtTaxaEntrega.setText("");
+		txtTotal.setText("");
+	}
+}

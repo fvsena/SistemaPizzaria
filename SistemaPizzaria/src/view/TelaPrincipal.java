@@ -19,6 +19,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	private Button btnPedido = new Button("Cadastro de Pedidos");
 	private Button btnFechar = new Button("Fechar");
 
+	
 	@Override
 	public void handle(ActionEvent event) {
 		Stage janela = (Stage)((Node) event.getSource()).getScene().getWindow();
@@ -52,6 +53,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		btnPedido.relocate(50, 80);
 		btnProduto.relocate(200, 80);
 		btnFechar.relocate(720, 80);
+
 	}
 
 	private void adicionarComponentes(Pane pane) {
@@ -60,6 +62,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		pane.getChildren().add(btnFechar);
 		pane.getChildren().add(lblTitulo);
 		lblTitulo.setFont(Font.font("Arial", 32));
+		
 	}
 
 	private void adicionarObservadores() {

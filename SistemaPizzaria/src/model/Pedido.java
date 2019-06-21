@@ -7,12 +7,12 @@ public class Pedido {
 	public String nomeP;
 	public String telefoneP;
 	public String enderecoP;
-	public  String produtoP;
+	public String produtoP;
 	public int quantidadeP;
-	public int taxaEntregaP;
-	public int totalP;
+	public double taxaEntregaP;
+	public double totalP;
 	
-	public Pedido(String nomeP, String telefoneP, String enderecoP, Produto produto, int quantidadeP, int taxaEntregaP, int totalP) {
+	public Pedido(String nomeP, String telefoneP, String enderecoP, String produtoP, int quantidadeP, double taxaEntregaP, double totalP) {
 		this.nomeP = nomeP;
 		this.telefoneP = telefoneP;
 		this.enderecoP = enderecoP;
@@ -22,6 +22,13 @@ public class Pedido {
 		this.totalP = totalP;
 	}
 	
-	public Pedido() {};
+	public Pedido() {
+		
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Nome: %s Total: %s", this.nomeP, ""+this.totalP);
+	};
 	
 }

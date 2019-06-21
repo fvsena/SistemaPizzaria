@@ -15,7 +15,6 @@ public class ProdutoDAO {
 	//Lista de Produtos
 	private static List<Produto> listaProdutos = new ArrayList<Produto>();
 	
-	//Insere um produto no banco de dados
 	public int adicionarProduto(Produto p) {
 		int linhasAfetadas = 0;
 		try {
@@ -63,6 +62,7 @@ public class ProdutoDAO {
 					+ "SELECT Nome, Ingredientes, Valor "
 					+ "FROM Produto";
 			Connection conn = ConnectionManager.getInstance().getConnection();
+			double soma =0;
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
@@ -70,7 +70,9 @@ public class ProdutoDAO {
 						rs.getString("Nome"),
 						rs.getString("Ingredientes"),
 						rs.getDouble("Valor")));
+				soma += rs.getDouble("valor");
 			}
+			System.out.println(soma);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

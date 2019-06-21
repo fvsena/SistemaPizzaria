@@ -86,13 +86,12 @@ public class TelaLogin extends Application implements  EventHandler<ActionEvent>
 	private void verificarLogin(Stage janelaLogin) {
 		String usuario = txtUsuario.getText();
 		String senha = txtSenha.getText();
-		
-		if (controller.validarLogin(usuario, senha)) {
-			//Direciona pro menu
+		boolean loginValido =controller.validarLogin(usuario, senha); 
+		if (loginValido) {
+	
 			abrirMenuPrincipal();
 			sair(janelaLogin);
 		} else {
-			//Mensagem de usuário ou senha inválido
 		JOptionPane.showMessageDialog(null, "Login Invalido");
 		}
 	}

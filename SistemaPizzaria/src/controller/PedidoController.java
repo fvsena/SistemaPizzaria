@@ -13,30 +13,26 @@ import model.Produto;
 
 public class PedidoController {
 
-	private  PedidoDao pedidoDAO = new  PedidoDao();
-
+	private PedidoDao pedidoDAO = new  PedidoDao();
 	private ObservableList<Pedido> listaPedido = FXCollections.observableArrayList();
 
-
-
-
 	public int adicionarPedido(Pedido p) {
-
 		return pedidoDAO.adicionarPedido(p);
 	}
 
 	public ObservableList<Pedido> obterPedido(){
-
+		listaPedido.clear();
 		listaPedido.addAll(pedidoDAO.obterPedido());
+		int totalItens = 0;
+		for (Pedido pedido : listaPedido) {
+			totalItens += pedido.quantidadeP;
+		}
+		System.out.println(totalItens);
 		return listaPedido;
 	}
 
-	//Retorna todos os produtos cadastrados no banco de dados
-		public List<Produto> obterProdutos(){
-			return pedidoDAO.obterProdutos();
-		}
-		
-		
-
+	public List<Produto> obterProdutos(){
+		return pedidoDAO.obterProdutos();
+	}
 }
 
